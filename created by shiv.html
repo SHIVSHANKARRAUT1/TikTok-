@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>TikTok Like / Follower - Just Rs. 5</title>
+  <style>
+    body { font-family: Arial; background-color: #f2f2f2; text-align: center; margin-top: 30px; }
+    .box { background: white; padding: 30px; border-radius: 10px; width: 320px; margin: auto; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+    input { width: 100%; padding: 10px; margin: 10px 0; }
+    button { padding: 10px 20px; background-color: green; color: white; border: none; border-radius: 5px; cursor: pointer; }
+    #otpSection, #qrSection { display: none; }
+    img { margin: 20px 0; width: 200px; }
+    #timer { font-size: 14px; color: red; }
+  </style>
+</head>
+<body>
+
+<p><strong>Created by Shiv Shankar</strong></p>
+
+<div class="box">
+  <h2>TikTok Like / Follower - Just Rs. 5</h2>
+  <button onclick="showLogin()">Add Money</button>
+</div>
+
+<div class="box" id="loginBox" style="display:none;">
+  <h3>Login to eSewa</h3>
+  <input type="text" id="demoId" placeholder="Enter eSewa ID">
+  <input type="password" id="demoPin" placeholder="Enter PIN">
+  <button onclick="sendOTP()">Send OTP</button>
+</div>
+
+<div class="box" id="otpSection">
+  <h3>Enter OTP</h3>
+  <p>OTP sent: <span id="otpDisplay"></span></p>
+  <p id="timer"></p>
+  <input type="text" id="otpInput" placeholder="Enter OTP">
+  <button onclick="verifyOTP()">Verify</button>
+</div>
+
+<div class="box" id="qrSection">
+  <h3>Pay Rs. 5 for TikTok Likes/Followers</h3>
+  <img src="https://yourdomain.com/your-uploaded-qr.png" alt="QR Code">
+  <p>RIKESH MAHATO KAHAR<br>9841825363</p>
+  <button onclick="alert('Payment Initiated (Simulated).')">Pay Now</button>
+</div>
+
+<script>
+  let generatedOTP = '';
+  let countdown;
+
+  function showLogin() {
+    document.getElementById('loginBox').style.display = 'block';
+  }
+
+  function sendOTP() {
+    const id = document.getElementById('demoId').value;
+    const pin = document.getElementById('demoPin').value;
+
+    if (id && pin) {
+      generatedOTP = Math.floor(100000 + Math.random() * 900000).toString();
+      document.getElementById('otpDisplay').innerText = generatedOTP;
+      document.getElementById('otpSection').style.display = 'block';
+      startCountdown(120); // 2 minutes
+    } else {
+      alert("Please enter ID and PIN.");
+    }
+  }
+
+  function startCountdown(duration) {
+    let timer = duration;
+    const timerElement = document.getElementById("timer");
+
+    clearInterval(countdown); // Clear any existing countdown
+    countdown = setInterval(function () {
+      const minutes = Math.floor(timer / 60);
+      const seconds = timer % 60;
+      timerElement.textContent = `OTP valid for: ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+      if (--timer < 0) {
+        clearInterval(countdown);
+        timerElement.textContent = "OTP expired.";
+      }
+    }, 1000);
+  }
+
+  function verifyOTP() {
+    const userOTP = document.getElementById('otpInput').value;
+    if (userOTP === generatedOTP) {
+      alert("Login successful.");
+      document.getElementById('qrSection').style.display = 'block';
+    } else {
+      alert("Incorrect OTP. Try again.");
+    }
+  }
+</script>
+
+</body>
+</html>
